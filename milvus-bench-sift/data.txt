@@ -1,5 +1,0 @@
-# choose sift dataset
-https://github.com/erikbern/ann-benchmarks/#data-sets
-
-# download sift 128 dataset
-https://ann-benchmarks.com/sift-128-euclidean.hdf5
