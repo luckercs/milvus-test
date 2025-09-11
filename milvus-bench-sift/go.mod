@@ -6,7 +6,6 @@ require (
 	github.com/gin-gonic/gin v1.4.0
 	github.com/howeyc/gopass v0.0.0-20210920133722-c8aef6fb66ef
 	github.com/milvus-io/milvus/client/v2 v2.5.4
-	gonum.org/v1/hdf5 v0.0.0-20210714002203-8c5d23bc6946
 	google.golang.org/grpc v1.65.0
 )
 
