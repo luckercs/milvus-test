@@ -19,24 +19,27 @@ docker build --platform=linux/arm64 --build-arg ARCH=aarch64 -f milvus_bench.doc
 
 ```shell
 (1) write sift data to milvus
-docker run -it --name milvus_bench_sift --rm milvus-bench-sift:amd64-250910 python milvus_bench_sift.py --milvus_uri http://localhost:19530 --milvus_token root:Milvus 
+docker run -it --name milvus_bench_sift --rm milvus-bench-sift:amd64-250910 python milvus_bench_sift.py --milvus_uri http://<MILVUS_SERVER>:<MILVUS_PORT>
 
 (2) get sift test data
-docker run -it --name milvus_bench_sift --rm -v $(pwd)/testdata:/app/testdata milvus-bench-sift:amd64-250910 python milvus_bench_sift.py --op readAndSave
+docker run -it --name milvus_bench_sift --rm -v $(pwd)/testdata:/app/testdata milvus-bench-sift:amd64-250910 python milvus_bench_sift.py --op readAndSave --hdf5_dataset test
 
-(3) run milvus_sift_bench_server
-chmod +x milvus_bench_sift*
-mv milvus_bench_sift* milvus_bench_sift
-# 检索服务
-./milvus_bench_sift -server <milvus_server> -port <milvus_port> -user root -op server -server_port 8089
+(3) run test server
+docker run -itd --name milvus_bench_sift --rm  milvus-bench-sift:amd64-250910 /bin/bash
+docker cp milvus_bench_sift:/app/milvus_bench_sift ./
+docker cp milvus_bench_sift:/app/go-stress-testing-linux ./
+docker rm -f milvus_bench_sift
+
+nohup ./milvus_bench_sift -server <MILVUS_SERVER> -port <MILVUS_PORT> -user root -password <MILVUS_PASSWORD>  -op server -server_port 8089 > log 2>&1 & 
+
 cat<<EOF> curl.sh
-curl http://localhost:8089?topk=10
+curl http://localhost:8089/search?topk=10
 EOF
 
 (4) benchmark
-./go-stress-testing-linux-x86_64 -c 100 -n 10 -p curl.sh
+./go-stress-testing-linux -c 1000 -n 10 -p curl.sh
 
 (5) delete collection
-./milvus_bench_sift -server <milvus_server> -port <milvus_port> -user root -op delete
+./milvus_bench_sift -server <MILVUS_SERVER> -port <MILVUS_PORT> -user root -op delete
 
 ```

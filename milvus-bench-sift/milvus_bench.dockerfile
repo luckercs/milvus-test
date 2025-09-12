@@ -15,9 +15,10 @@ RUN mkdir -p /app/testdata
 ADD ./sift-128-euclidean.hdf5 /app/sift-128-euclidean.hdf5
 ADD ./milvus_bench_sift.py /app/milvus_bench_sift.py
 # build first
-ADD ./milvus_bench_sift_${ARCH} /app/
+ADD ./milvus_bench_sift_${ARCH} /app/milvus_bench_sift
 # download from https://github.com/luckercs/go-stress-testing/releases
-ADD ./go-stress-testing-linux-${ARCH} /app/
+ADD ./go-stress-testing-linux-${ARCH} /app/go-stress-testing-linux
+RUN chmod +x /app/milvus_bench_sift /app/go-stress-testing-linux
 
 WORKDIR /app
 CMD [ "/bin/bash" ]

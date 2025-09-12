@@ -109,7 +109,8 @@ if __name__ == "__main__":
             print("error: milvus_uri must be set, eg: http://localhost:19530")
             sys.exit(1)
         if args.milvus_token is None:
-            args.milvus_token = getpass.getpass("please input milvus token: ")
+            args.milvus_token = getpass.getpass("please input milvus root password: ")
+            args.milvus_token = "root:" + args.milvus_token
         data_list, data_shape =  read_hdf5_data(file_path=args.hdf5_path, train_key=args.hdf5_dataset)
         create_and_insert_milvus_collection(uri=args.milvus_uri, token=args.milvus_token, dim=data_shape[1], metric_type=args.milvus_metric_type, m=int(args.milvus_HNSW_m), ef=int(args.milvus_HNSW_ef), collection_name=args.milvus_collection, batch_size=int(args.milvus_insert_batchsize), data=data_list)
     elif args.op == "readAndSave":
@@ -121,7 +122,8 @@ if __name__ == "__main__":
             print("error: milvus_uri must be set, eg: http://localhost:19530")
             sys.exit(1)
         if args.milvus_token is None:
-            args.milvus_token = getpass.getpass("please input milvus token: ")
+            args.milvus_token = getpass.getpass("please input milvus root password: ")
+            args.milvus_token = "root:" + args.milvus_token
         delete_milvus_collection(uri=args.milvus_uri, token=args.milvus_token, collection_name=args.milvus_collection)
     else:
         print("error: invalid op")
