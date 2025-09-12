@@ -42,4 +42,6 @@ EOF
 (5) delete collection
 ./milvus_bench_sift -server <MILVUS_SERVER> -port <MILVUS_PORT> -user root -op delete
 
+(6) stop test server
+ps -ef | grep milvus_bench_sift | grep -v grep | awk '{print $2}' | xargs kill -9
 ```
