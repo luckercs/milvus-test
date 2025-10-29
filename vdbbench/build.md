@@ -8,14 +8,19 @@ import oss2
 bucket=oss2.Bucket(oss2.AnonymousAuth(), "assets.zilliz.com.cn/benchmark/", "benchmark", True)
 bucket.get_object_to_file("benchmark/cohere_medium_1m/test.parquet", "/tmp/test.parquet")
 
-# 或者使用wget链接下载
-# cohere1m数据集下载示例
+# 或者使用wget链接下载, cohere1m数据集下载示例
 wget https://assets.zilliz.com/benchmark/cohere_medium_1m/test.parquet --no-check-certificate
 wget https://assets.zilliz.com/benchmark/cohere_medium_1m/neighbors.parquet --no-check-certificate
 wget https://assets.zilliz.com/benchmark/cohere_medium_1m/shuffle_train.parquet --no-check-certificate
 wget https://assets.zilliz.com/benchmark/cohere_medium_1m/scalar_labels.parquet --no-check-certificate
 上述命令下载的数据集文件放在 /tmp/vectordb_bench/dataset/cohere/cohere_medium_1m/ 目录下。
 
+# 其余数据集类似
+LAION(768) GIST(960) Cohere(768) Bioasq(1024) Glove(200) SIFT(128) OpenAI(1536)
+查看对应数据集参数： https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/backend/dataset.py
+with_gt 则包含 neighbors.parquet
+with_scalar_labels 则包含 scalar_labels.parquet
+_size_label 对应数据集大小
 
 （2）查看所有测试类型
 vectordbbench --help
