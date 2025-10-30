@@ -4,8 +4,7 @@ RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install --upgrade pip
 RUN pip install vectordb-bench==1.0.11
 RUN sed -i '61,67 s/^/#/' /opt/bitnami/python/lib/python3.13/site-packages/vectordb_bench/backend/data_source.py
-RUN apt update
-RUN apt -y install vim
+RUN apt update && apt -y install vim
 
 ENV DATASET_SOURCE=ALIYUNOSS
 ENV DATASET_LOCAL_DIR=/tmp/vectordb_bench/dataset
