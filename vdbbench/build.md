@@ -40,4 +40,5 @@ PerformanceCustomDataset|StreamingPerformanceCase|LabelFilterPerformanceCase|New
 （3）运行测试
 # 参考华为高斯库测试： https://docs.opengauss.org/zh/docs/latest/docs/DataVec/openGauss-VectorDBBench.html
 vectordbbench milvushnsw --uri --user-name  --password --replica-number 1 --m --ef-construction   --ef-search  --k 10 --num-concurrency  1,5,10,20,30,40,60,80 --concurrency-duration 30 --case-type Performance768D1M --num-concurrency 1
-vectordbbench milvusivfsq8  --uri http://172.29.0.1:19530 --lists 4096 --probes 128 --case-type Performance768D1M --k 10 --num-concurrency 1 
+vectordbbench milvusivfsq8  --uri http://172.29.0.1:19530 --user-name  --password  --lists 4096 --probes 128 --case-type Performance768D1M --k 10 --num-concurrency 1 --concurrency-duration 30 
+# 第一次跑时会创建集合加载数据，后续如果再次测试像直接检索的话，可以添加参数  --skip-drop-old --skip-load  避免重复创建集合
